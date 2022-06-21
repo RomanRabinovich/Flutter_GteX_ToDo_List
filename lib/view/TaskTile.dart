@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile({
     Key? key,
     required this.size,
     required this.text,
+    this.time,
+    this.des,
+    required this.press,
   }) : super(key: key);
 
   final Size size;
   final TextTheme text;
+
+  final String? time, des;
+  final Callback press;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +35,7 @@ class TaskTile extends StatelessWidget {
               height: double.maxFinite,
               color: Colors.pink,
               child: Text(
-                "26",
+                "$time",
                 style: text.headline5!.copyWith(color: Colors.white),
               ),
             ),
@@ -36,13 +43,13 @@ class TaskTile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  "Task Description",
+                  "$des",
                   style: text.headline6,
                 ),
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: press,
               child: Container(
                 alignment: Alignment.center,
                 width: size.width * 0.1,

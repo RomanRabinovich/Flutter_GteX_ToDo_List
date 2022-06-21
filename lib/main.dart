@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const TodoScreen(),
+      home: TodoScreen(),
       theme: ThemeData(primarySwatch: Colors.pink),
     );
   }

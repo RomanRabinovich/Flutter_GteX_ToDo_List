@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_getex_todo_app/controller/TaskController.dart';
+import 'package:get/get.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+  AddTaskScreen({Key? key}) : super(key: key);
+
+  TaskController controller = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,7 @@ class AddTaskScreen extends StatelessWidget {
                 flex: 1,
               ),
               TextField(
+                controller: controller.textEditingController,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.black12,
@@ -35,7 +40,10 @@ class AddTaskScreen extends StatelessWidget {
                 height: 25,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  controller.addTask();
+                  Get.back();
+                },
                 child: Container(
                   alignment: Alignment.center,
                   width: double.infinity,

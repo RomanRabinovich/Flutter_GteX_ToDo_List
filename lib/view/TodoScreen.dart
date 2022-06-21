@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_getex_todo_app/controller/TaskController.dart';
 import 'package:flutter_getex_todo_app/view/AddTaskScreen.dart';
 import 'package:get/get.dart';
 
 import 'TaskTile.dart';
 
 class TodoScreen extends StatelessWidget {
-  const TodoScreen({Key? key}) : super(key: key);
+  TodoScreen({Key? key}) : super(key: key);
+
+  final TaskController controller = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class TodoScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: InkWell(
         onTap: () {
-          Get.to(const AddTaskScreen());
+          Get.to(AddTaskScreen());
         },
         child: Container(
           height: 50,
@@ -30,21 +33,29 @@ class TodoScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: ListView.builder(
-              itemBuilder: (context, index) =>
-                  TaskTile(size: size, text: text)),
-          //child:
-        ),
-
-        //    child: Center(
-        //   child: Text(
-        //     'No found any fucking notes',
-        //     style: text.headline5,
-        //   ),
-        // ),
-      ),
+          child: Obx(
+        () => (controller.taskList.isEmpty)
+            ? Center(
+                child: Text(
+                  "No fucking task found",
+                  style: text.headline5,
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: ListView.builder(
+                    itemCount: controller.taskList.length,
+                    itemBuilder: (context, index) => TaskTile(
+                          size: size,
+                          text: text,
+                          time: controller.taskList[index].taskCreated,
+                          des: controller.taskList[index].task,
+                          press: () {
+                            controller.deleteTask(controller.taskList[index]);
+                          },
+                        )),
+              ),
+      )),
     );
   }
 }
